@@ -7,7 +7,10 @@ module MetaTags
     # @return [Array<String>] array of title parts with tags removed.
     #
     def self.normalize_title(title)
-      Array(title).flatten.map(&method(:strip_tags))
+      Array(title).flatten.map do |item|
+        value = strip_tags(item)
+        item.html_safe? ? value.html_safe : value
+      end
     end
 
     # Normalize description value.
